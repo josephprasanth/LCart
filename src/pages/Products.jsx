@@ -9,18 +9,24 @@ import {
 } from "@mui/material";
 import data from "../data/inventory.json";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Products() {
   const [products, setProducts] = React.useState([]);
   const { cart, dispatch } = useContext(CartContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setProducts(data.items);
+    // Converting Price Type To Number
+    const normalizedProductPrice = data.items.map((item) => ({
+      ...item,
+      price: Number(item.price),
+    }));
+    setProducts(normalizedProductPrice);
     console.log(data.items);
-  });
-  // <pre>{JSON.stringify(product, null, 2)}</pre>
+  }, []);
 
   const handleAdd = (product) => {
     if (!product.available) return;

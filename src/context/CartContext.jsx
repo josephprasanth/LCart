@@ -21,10 +21,21 @@ const cartReducer = (state, action) => {
       return [...state, { ...action.product, quantity: 1 }];
     }
     case "REMOVE": {
+      return state.filtert((p) => p.id !== action.id);
     }
     case "INCREASE": {
+      return state.map((p) =>
+        p.id === action.id ? { ...p, quantity: p.quantity + 1 } : p
+      );
     }
     case "DECREASE": {
+      return state
+        .map((p) =>
+          p.id === action.id
+            ? { ...p, quantity: Math.max(p.quantity - 1, 0) }
+            : p
+        )
+        .filter((p) => p.quantity > 0);
     }
     default:
       return state;
