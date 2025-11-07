@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Container,
   Grid,
@@ -8,16 +8,38 @@ import {
   Button,
 } from "@mui/material";
 import data from "../data/inventory.json";
+import { CartContext } from "../context/CartContext";
+import Badge from "@mui/material/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Products() {
   const [products, setProducts] = React.useState([]);
+  const { cart, dispatch } = useContext(CartContext);
+
   useEffect(() => {
     setProducts(data.items);
     console.log(data.items);
   });
-  // <pre>{JSON.stringify(product, null, 2)}</pre>S
+  // <pre>{JSON.stringify(product, null, 2)}</pre>
+
+  const handleAdd = (product) => {
+    if (!product.available) return;
+    dispatch({ type: "ADD_TO_CART", product });
+  };
+
   return (
     <Container sx={{ mt: 4 }}>
+      <Button
+        variant="outlined"
+        sx={{ mb: 2 }}
+        startIcon={
+          <Badge badgeContent={cart.length} color="primary">
+            <ShoppingCartIcon />
+          </Badge>
+        }
+      >
+        Go to Cart
+      </Button>
       <Typography
         variant="h5"
         sx={{
@@ -47,6 +69,14 @@ export default function Products() {
                   {" "}
                   {product.available ? "In Stock" : "Out of Stock"}
                 </Typography>
+                <Button
+                  variant="contained"
+                  sx={{ mt: 1 }}
+                  disabled={!product.available}
+                  onClick={() => handleAdd(product)}
+                >
+                  Add To Cart
+                </Button>
               </CardContent>
             </Card>
           </Grid>
