@@ -21,7 +21,7 @@ const cartReducer = (state, action) => {
       return [...state, { ...action.product, quantity: 1 }];
     }
     case "REMOVE": {
-      return state.filtert((p) => p.id !== action.id);
+      return state.filter((p) => p.id !== action.id);
     }
     case "INCREASE": {
       return state.map((p) =>

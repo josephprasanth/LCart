@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   Container,
   Grid,
@@ -14,7 +14,7 @@ import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Products() {
-  const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = useState([]);
   const { cart, dispatch } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -38,6 +38,7 @@ export default function Products() {
       <Button
         variant="outlined"
         sx={{ mb: 2 }}
+        onClick={() => navigate("/cart")}
         startIcon={
           <Badge badgeContent={cart.length} color="primary">
             <ShoppingCartIcon />
@@ -53,7 +54,7 @@ export default function Products() {
         }}
         gutterBottom
       >
-        Product List
+        Electronic Product List
       </Typography>
       <Grid container spacing={2}>
         {products.map((product) => (
