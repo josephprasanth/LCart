@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
+import Products from "./pages/Products";
 function App() {
-  return <Typography variant="h4">Roboto Test</Typography>;
+  return <Products />;
 }
 
 export default App;
